@@ -1,4 +1,4 @@
-## CDK Lambda Function and API Gateway
+## CDK S3 Lambda DynamoDB
 
 This CDK project demo the process of creating a Lambda function that gets triggered when uploading a file to an S3 Bucked. The Lambda function will read the file name and size, then insert it to a DynamoDB table.
 
