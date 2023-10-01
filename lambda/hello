@@ -1,0 +1,27 @@
+//code for a lambda function that will be triggered when a file is uploaded to the S3 bucket
+//it will store the file name and size in the DynamoDB table
+const AWS = require('aws-sdk');
+
+exports.handler = async function(event, context) {
+  
+  // log the event
+  console.log(event);
+
+  // the bucket name and file name are in the event
+  const bucket = event.Records[0].s3.bucket.name;
+  const key = event.Records[0].s3.object.key;
+ 
+  // store the file name and size in the DynamoDB table
+ 
+  const ddb = new AWS.DynamoDB();
+  const params = {
+    TableName: process.env.TABLE_NAME,
+    Item: {
+      name: { S: key },
+      size: { N: event.Records[0].s3.object.size.toString() },
+    },
+  };
+
+  await ddb.putItem(params).promise();
+
+}
